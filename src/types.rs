@@ -22,6 +22,8 @@ impl TryFrom<String> for Rule {
       .split_whitespace()
       .map(|n| match n {
         "0" => false,
+        "F" => false,
+        "f" => false,
         _ => true,
       }).collect();
     if parts.len() < 2 {

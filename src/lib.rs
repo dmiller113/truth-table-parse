@@ -12,8 +12,22 @@ mod tests {
     }
 
     #[test]
-    fn parse_single_string() {
+    fn parse_number_string() {
         let test_string = "1 1 0";
+        let expected_result = Rule {
+            inputs: vec![true, true],
+            result: false,
+        };
+        let result = Rule::try_from(test_string.to_string());
+        match result {
+            Ok(rule) => assert_eq!(rule, expected_result),
+            Err(_) => panic!(),
+        };
+    }
+
+    #[test]
+    fn parse_char_string() {
+        let test_string = "t t f";
         let expected_result = Rule {
             inputs: vec![true, true],
             result: false,
