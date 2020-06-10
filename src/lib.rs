@@ -1,9 +1,8 @@
 mod types;
 
-
 #[cfg(test)]
 mod tests {
-    use crate::types::{ ParseError, Rule, TruthTable };
+    use crate::types::{ParseError, Rule, TruthTable};
     use std::convert::TryFrom;
 
     #[test]
@@ -42,8 +41,7 @@ mod tests {
     #[test]
     fn fail_too_few() {
         let test_string = "1";
-        let expected_result =
-            ParseError::TooFewInputs;
+        let expected_result = ParseError::TooFewInputs;
 
         let result = Rule::try_from(test_string.to_string());
         match result {
@@ -56,11 +54,11 @@ mod tests {
     fn make_truth_table_from_rows() {
         let rule1 = Rule {
             inputs: vec![true, false],
-            result: true ,
+            result: true,
         };
         let rule2 = Rule {
             inputs: vec![false, true],
-            result: false ,
+            result: false,
         };
 
         let rules = vec![rule1, rule2];
