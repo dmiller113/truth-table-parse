@@ -69,14 +69,11 @@ mod tests {
 
     #[test]
     fn testable_input_from_string() {
-        fn test_input<F>(
-            input: &str,
-            expected_result: &TestableInput,
-            assert: F,
-        ) where F: FnOnce(TestableInput, &TestableInput) {
-            let result: TestableInput = input
-            .split_whitespace()
-            .collect();
+        fn test_input<F>(input: &str, expected_result: &TestableInput, assert: F)
+        where
+            F: FnOnce(TestableInput, &TestableInput),
+        {
+            let result: TestableInput = input.split_whitespace().collect();
 
             assert(result, expected_result);
         }
@@ -100,40 +97,14 @@ mod tests {
         let true_raw_result = vec![true, true, true];
         let false_raw_result = vec![false, false, false];
 
-        let true_expected_result =
-            TestableInput(true_raw_result.clone());
-        let false_expected_result =
-            TestableInput(false_raw_result.clone());
+        let true_expected_result = TestableInput(true_raw_result.clone());
+        let false_expected_result = TestableInput(false_raw_result.clone());
 
-        test_input(
-            true_number_input,
-            &true_expected_result,
-            true_assert,
-        );
-        test_input(
-            true_string_input,
-            &true_expected_result,
-            true_assert,
-        );
-        test_input(
-            false_number_input,
-            &false_expected_result,
-            true_assert,
-        );
-        test_input(
-            false_string_input,
-            &false_expected_result,
-            true_assert,
-        );
-        test_input(
-            false_capital_input,
-            &false_expected_result,
-            true_assert,
-        );
-        test_input(
-            mixed_input,
-            &true_expected_result,
-            false_assert,
-        );
+        test_input(true_number_input, &true_expected_result, true_assert);
+        test_input(true_string_input, &true_expected_result, true_assert);
+        test_input(false_number_input, &false_expected_result, true_assert);
+        test_input(false_string_input, &false_expected_result, true_assert);
+        test_input(false_capital_input, &false_expected_result, true_assert);
+        test_input(mixed_input, &true_expected_result, false_assert);
     }
 }
