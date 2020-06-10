@@ -1,7 +1,10 @@
 use std::convert::TryFrom;
+use std::iter::FromIterator;
+use std::clone::Clone;
 
 #[derive(Eq)]
 #[derive(PartialEq)]
+#[derive(Clone)]
 #[derive(Debug)]
 pub struct Rule {
   pub inputs: Vec<bool>,
@@ -11,8 +14,20 @@ pub struct Rule {
 #[derive(Eq)]
 #[derive(PartialEq)]
 #[derive(Debug)]
+pub struct TruthTable(pub Vec<Rule>);
+
+#[derive(Eq)]
+#[derive(PartialEq)]
+#[derive(Debug)]
 pub enum ParseError {
   TooFewInputs,
+}
+
+impl FromIterator<Rule> for TruthTable {
+  fn from_iter<T>(i: T) -> Self
+    where T: IntoIterator<Item=Rule> {
+    TruthTable(i.into_iter().collect())
+  }
 }
 
 impl TryFrom<String> for Rule {

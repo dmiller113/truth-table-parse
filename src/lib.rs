@@ -3,7 +3,7 @@ mod types;
 
 #[cfg(test)]
 mod tests {
-    use crate::types::{ ParseError, Rule };
+    use crate::types::{ ParseError, Rule, TruthTable };
     use std::convert::TryFrom;
 
     #[test]
@@ -50,5 +50,22 @@ mod tests {
             Ok(_) => panic!(),
             Err(error) => assert_eq!(error, expected_result),
         }
+    }
+
+    #[test]
+    fn make_truth_table_from_rows() {
+        let rule1 = Rule {
+            inputs: vec![true, false],
+            result: true ,
+        };
+        let rule2 = Rule {
+            inputs: vec![false, true],
+            result: false ,
+        };
+
+        let rules = vec![rule1, rule2];
+        let expected_result = TruthTable(rules.clone());
+        let result: TruthTable = rules.into_iter().collect();
+        assert_eq!(result, expected_result);
     }
 }
