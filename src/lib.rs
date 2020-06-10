@@ -2,7 +2,7 @@ mod types;
 
 #[cfg(test)]
 mod tests {
-    use crate::types::{ParseError, Rule, TruthTable};
+    use crate::types::{ParseError, Rule, TestableInput, TruthTable};
     use std::convert::TryFrom;
 
     #[test]
@@ -65,5 +65,24 @@ mod tests {
         let expected_result = TruthTable(rules.clone());
         let result: TruthTable = rules.into_iter().collect();
         assert_eq!(result, expected_result);
+    }
+
+    #[test]
+    fn testable_input_from_string() {
+        let number_input = "1 1 1";
+        let string_input = "t t t";
+        let raw_result = vec![true, true, true];
+        let expected_result = TestableInput(raw_result.clone());
+        let number_result: TestableInput = number_input
+            .split_whitespace()
+            .map(str::to_string)
+            .collect();
+        let string_result: TestableInput = string_input
+            .split_whitespace()
+            .map(str::to_string)
+            .collect();
+
+        assert_eq!(number_result, expected_result);
+        assert_eq!(string_result, expected_result);
     }
 }

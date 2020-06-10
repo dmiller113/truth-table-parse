@@ -12,8 +12,20 @@ pub struct Rule {
 pub struct TruthTable(pub Vec<Rule>);
 
 #[derive(Eq, PartialEq, Debug)]
+pub struct TestableInput(pub Vec<bool>);
+
+#[derive(Eq, PartialEq, Debug)]
 pub enum ParseError {
     TooFewInputs,
+}
+
+pub fn parse_input(s: &str) -> bool {
+  match s {
+    "0" => false,
+    "f" => false,
+    "F" => false,
+    _ => true,
+  }
 }
 
 impl FromIterator<Rule> for TruthTable {
@@ -25,17 +37,23 @@ impl FromIterator<Rule> for TruthTable {
     }
 }
 
+impl FromIterator<String> for  TestableInput {
+  fn from_iter<T>(i: T) -> Self
+  where
+      T: IntoIterator<Item = String>,
+    {
+      TestableInput(
+        i.into_iter().map(|i| parse_input(i.as_str())).collect()
+      )
+    }
+}
+
 impl TryFrom<String> for Rule {
     type Error = ParseError;
     fn try_from(s: String) -> Result<Self, Self::Error> {
         let mut parts: Vec<bool> = s
             .split_whitespace()
-            .map(|n| match n {
-                "0" => false,
-                "F" => false,
-                "f" => false,
-                _ => true,
-            })
+            .map(parse_input)
             .collect();
         if parts.len() < 2 {
             Err(ParseError::TooFewInputs)
