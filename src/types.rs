@@ -37,13 +37,10 @@ impl FromIterator<Rule> for TruthTable {
     }
 }
 
-impl FromIterator<String> for  TestableInput {
-  fn from_iter<T>(i: T) -> Self
-  where
-      T: IntoIterator<Item = String>,
-    {
+impl<T> FromIterator<T> for  TestableInput where T: AsRef<str> {
+  fn from_iter<U>(i: U) -> Self where U: IntoIterator<Item = T> {
       TestableInput(
-        i.into_iter().map(|i| parse_input(i.as_str())).collect()
+        i.into_iter().map(|i| parse_input(i.as_ref())).collect()
       )
     }
 }

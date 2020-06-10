@@ -76,7 +76,6 @@ mod tests {
         ) where F: FnOnce(TestableInput, &TestableInput) {
             let result: TestableInput = input
             .split_whitespace()
-            .map(str::to_string)
             .collect();
 
             assert(result, expected_result);
